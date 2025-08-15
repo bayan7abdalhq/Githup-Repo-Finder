@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>GitHub Repository Finder</title>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="navbar">
+      <img src="github.svg" alt="GitHub Logo" class="logo"/>
+      <h3>GitHub Repository Finder</h3>
+    </div>
+  </nav>
+
+    <div class="search-container">
+        <h2>Search GitHub Repositories</h2>
+        <p>Enter a Programming Language to search for it on GitHub.</p>
+        <div class="search-form">
+            <select id="language-select">
+                <option value="">Select a language...</option>
+            </select>
+            <button id="search-button">Search</button>
+        </div>
+        
+        <div id="loading-message" class="message-box loading-state" >
+            <p>Loading repositories...</p>
+        </div>
+        
+        <div id="error-message" class="message-box error-state" >
+            <p id="error-text"></p>
+        </div>
+        
+        <div id="empty-message" class="message-box empty-state" >
+            <p>No repositories found for this language.</p>
+        </div>
+        
+        <div id="repository-result" class="repository-display" >
+            <div class="repo-header">
+                <h3 id="repo-name"></h3>
+                <a id="repo-link" target="_blank" class="github-link">View on GitHub</a>
+            </div>
+            <p id="repo-description" class="repo-description"></p>
+            <div class="repo-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span id="repo-stars" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Forks:</span>
+                    <span id="repo-forks" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Open Issues:</span>
+                    <span id="repo-issues" class="stat-value"></span>
+                </div>
+            </div>
+            <button id="refresh-button" class="refresh-btn">Refresh</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
