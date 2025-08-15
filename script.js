@@ -1,7 +1,7 @@
 const languageSelect = document.getElementById("language-select");
 const searchButton = document.getElementById("search-button");
 const refreshButton = document.getElementById("refresh-button");
-const errorText = document.getElementById("error-text");
+const retryButton = document.getElementById("retry-button");
 
 const repoName = document.getElementById("repo-name");
 const repoDescription = document.getElementById("repo-description");
@@ -13,18 +13,17 @@ const repoLink = document.getElementById("repo-link");
 const messages = {
   loading: document.getElementById("loading-message"),
   error: document.getElementById("error-message"),
-  empty: document.getElementById("empty-message"),
   result: document.getElementById("repository-result")
 };
 
 const languagesURL = "https://raw.githubusercontent.com/kamranahmedse/githunt/master/src/components/filters/language-filter/languages.json";
 let currentLanguage = "";
 
-function showMessage(state, text) {
+function showMessage(state) {
   Object.values(messages).forEach(el => el.style.display = "none");
-  if (state === "error" && text) errorText.textContent = text;
   messages[state].style.display = "block";
 }
+
 
 async function loadLanguages() {
   try {
@@ -51,15 +50,11 @@ async function fetchRepository() {
 
   try {
     const response = await fetch(`https://api.github.com/search/repositories?q=language:${selectedLanguage}&sort=stars&order=desc&per_page=100`);
-    if (!response.ok) throw new Error("Error fetching repositories " );
+    if (!response.ok) throw new Error("`HTTP error! status: ${response.status}`");
     const data = await response.json();
     const repositories = data.items;
 
-    if (!repositories.length) {
-      showMessage("empty");
-      return;
-    }
-
+    
     const randomRepo = repositories[Math.floor(Math.random() * repositories.length)];
 
     repoName.textContent = randomRepo.name;
@@ -83,6 +78,5 @@ function retrySearch() {
 
 searchButton.addEventListener("click", fetchRepository);
 refreshButton.addEventListener("click", retrySearch);
-
-
+retryButton.addEventListener("click", retrySearch);
 loadLanguages();
